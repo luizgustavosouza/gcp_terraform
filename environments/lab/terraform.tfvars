@@ -1,0 +1,1 @@
+gcp_credentials_file = "../../../gcloud-terraform-labs.json"

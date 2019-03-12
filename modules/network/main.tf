@@ -1,37 +1,26 @@
-module "vpc" {
-  source = "github.com/terraform-google-modules/terraform-google-network"
-  project_id   = ""
-  network_name = "example-vpc"
+resource "google_compute_network" "labnet" {
+  name = "${var.lab-network}"
+  auto_create_subnetworks = false
+}
 
-  subnets = [
-    {
-      subnet_name           = "subnet-01"
-      subnet_ip             = "10.10.10.0/24"
-      subnet_region         = "us-west1"
-    },
-    {
-      subnet_name           = "subnet-02"
-      subnet_ip             = "10.10.20.0/24"
-      subnet_region         = "us-west1"
-      subnet_private_access = "true"
-      subnet_flow_logs      = "true"
-    },
-  ]
 
-  secondary_ranges = {
-    subnet-01 = [
-      {
-        range_name    = "subnet-01-secondary-01"
-        ip_cidr_range = "192.168.64.0/24"
-      },
-    ]
+resource "google_compute_subnetwork" "lab-subnet-01" {
+  ip_cidr_range = "10.0.0.0/24"
+  name = "${var.lab-subnet-01}"
+  network = "${var.lab-network}"
+  depends_on = ["google_compute_network.labnet"]
+}
 
-    subnet-02 = [
-      {
-        range-name = "subnet-02-secondary-02"
-        ip_cidr_range = "192.168.65.0/24"
-      }
+resource "google_compute_subnetwork" "lab-subnet-2" {
+  ip_cidr_range = "10.0.1.0/24"
+  name = "${var.lab-subnet-02}"
+  network = "${var.lab-network}"
+  depends_on = ["google_compute_network.labnet"]
+}
 
-    ]
-  }
+resource "google_compute_subnetwork" "lab-subnet-3" {
+  ip_cidr_range = "10.0.2.0/24"
+  name = "${var.lab-subnet-03}"
+  network = "${var.lab-network}"
+  depends_on = ["google_compute_network.labnet"]
 }
