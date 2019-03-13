@@ -21,7 +21,6 @@ variable "gcp_region_name" {
   }
 }
 
-
 variable "gcp_zone_name" {
   type = "map"
 
@@ -34,19 +33,4 @@ variable "gcp_zone_name" {
     sa_east_b    = "southamerica-east1-b"
     sa_east_c    = "southamerica-east1-c"
   }
-}
-
-variable "lab-subnets" {
-  type = "map"
-  default = {
-    subnet01 = "lab-01"
-    subnet02 = "lab-02"
-    subnet03 = "lab-03"
-
-  }
-}
-
-variable "lab-network" {
-  type = "string"
-  default = "lab-net"
 }

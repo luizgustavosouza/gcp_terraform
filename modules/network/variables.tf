@@ -1,7 +1,8 @@
-variable "lab-network" {}
+variable "lab-networks-names" {
+  type = "string"
+}
 
-variable "lab-subnet-01" {}
+variable "lab-subnets" {
+  type = "list"
+}
 
-variable "lab-subnet-02" {}
-
-variable "lab-subnet-03" {}

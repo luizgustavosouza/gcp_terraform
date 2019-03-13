@@ -1,26 +1,11 @@
-resource "google_compute_network" "labnet" {
-  name = "${var.lab-network}"
+resource "google_compute_network" "lab-networks" {
+  name = "${var.lab-networks-names}"
   auto_create_subnetworks = false
 }
 
-
-resource "google_compute_subnetwork" "lab-subnet-01" {
-  ip_cidr_range = "10.0.0.0/24"
-  name = "${var.lab-subnet-01}"
-  network = "${var.lab-network}"
-  depends_on = ["google_compute_network.labnet"]
-}
-
-resource "google_compute_subnetwork" "lab-subnet-2" {
-  ip_cidr_range = "10.0.1.0/24"
-  name = "${var.lab-subnet-02}"
-  network = "${var.lab-network}"
-  depends_on = ["google_compute_network.labnet"]
-}
-
-resource "google_compute_subnetwork" "lab-subnet-3" {
-  ip_cidr_range = "10.0.2.0/24"
-  name = "${var.lab-subnet-03}"
-  network = "${var.lab-network}"
-  depends_on = ["google_compute_network.labnet"]
+resource "google_compute_subnetwork" "lab-subnetworks" {
+  count = "${length(var.lab-subnets)}"
+  ip_cidr_range = "${lookup(var.lab-subnets[count.index],"subnet_ip_range")}"
+  name = "${lookup(var.lab-subnets[count.index], "subnet_name")}"
+  network = "${google_compute_network.lab-networks.name}"
 }
