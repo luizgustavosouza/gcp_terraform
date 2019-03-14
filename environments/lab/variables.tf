@@ -13,24 +13,50 @@ variable "gcp_project_name" {
 }
 
 variable "gcp_region_name" {
-  type = "map"
+  type = "list"
 
-  default = {
-    us_central1 = "us-central1"
-    sa_east1    = "southamerica-east1"
-  }
+  default = [{
+    region_name = "us-central1"
+  }, {
+    region_name = "southamerica-east1"
+  }]
 }
 
 variable "gcp_zone_name" {
-  type = "map"
+  type = "list"
+
+  default = [{
+    zone_name = "us-central1-a"
+  }, {
+    zone_name = "us-central1-b"
+  }, {
+    zone_name = "us-central1-c"
+  }, {
+    zone_name = "us-central1-f"
+  }, {
+    zone_name = "southamerica-east1-a"
+  },
+    {
+      zone_name = "southamerica-east1-b"
+    },
+    {
+      zone_name = "southamerica-east1-c"
+    },
+  ]
+}
+
+variable "gcp_machine_types" {
+  type        = "string"
+  description = "GCP Machine Type"
+}
+
+variable "gcp_instances_images" {
+  type        = "map"
+  description = "GCP O.S Instances"
 
   default = {
-    us_central_a = "us-central1-a"
-    us_central_b = "us-central1-b"
-    us_central_c = "us-central1-c"
-    us_central_f = "us-central1-f"
-    sa_east_a    = "southamerica-east1-a"
-    sa_east_b    = "southamerica-east1-b"
-    sa_east_c    = "southamerica-east1-c"
+    debian9 = "debian-9"
+    centos7 = "centos-7"
+    win2012 = "windows-2012-r2"
   }
 }
